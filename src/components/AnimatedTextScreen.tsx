@@ -94,12 +94,13 @@ const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  padding: 20px;
+  padding: 20px 20px 60px 20px;
   gap: 40px;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.3s ease, transform 0.3s ease;
   pointer-events: none;
+  margin-top: -20px;
 
   &.visible {
     opacity: 1;

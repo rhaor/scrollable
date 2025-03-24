@@ -4,73 +4,6 @@
 
 _**User**_
 
-Sorry to change it, can you do Red Hat Next instead? 
-
----
-
-_**Assistant**_
-
-Of course! I'll update the font to Red Hat Display from Google Fonts:
-
----
-
-_****_
-
-```diff
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
--     <link href="https://fonts.googleapis.com/css2?family=Zain:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-+     <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Vite + React + TS</title>
-```
-
----
-
-_****_
-
-Now let's update your CSS to use Red Hat Display:
-
----
-
-_****_
-
-```diff
-    height: 100%;
-    overflow: hidden;
--   font-family: 'Zain', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-+   font-family: 'Red Hat Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    -webkit-font-smoothing: antialiased;
-  
-  :root {
--   font-family: 'Zain', system-ui, Avenir, Helvetica, Arial, sans-serif;
-+   font-family: 'Red Hat Display', system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
-```
-
----
-
-_****_
-
-I've made the following changes:
-
-1. Updated the Google Fonts link to use Red Hat Display with multiple weights (300-700)
-2. Updated all font-family declarations in the CSS to use 'Red Hat Display' instead of 'Zain'
-3. Maintained all the existing font weights, smoothing settings, and fallback fonts
-
-The Red Hat Display font should now be applied across your entire application. Let me know if you'd like to:
-1. Adjust any of the font weights
-2. Add any additional font styles
-3. Make any other font-related adjustments
-
-The font should be visible immediately after the page reloads!
-
----
-
-_**User**_
-
 Sorry, how about Figtree?
 
 ---
@@ -25731,6 +25664,49 @@ Now the "in control." text should be properly right-aligned. The text alignment 
 3. Otherwise, left-align it
 
 Is the alignment working correctly now?
+
+---
+
+_**User**_
+
+Can you raise the icons on AnimatedTextScreen up a little bit? 
+
+---
+
+_**Assistant**_
+
+Yes, I'll adjust the `ImageContainer` to move the icons up by modifying its padding and alignment:
+
+
+
+---
+
+_****_
+
+```diff
+    justify-content: center;
+    align-items: flex-end;
+-   padding: 20px;
++   padding: 20px 20px 40px 20px;
+    gap: 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
++   margin-top: -20px;
+  
+    &.visible {
+```
+
+---
+
+_****_
+
+I've made two changes to move the icons up:
+1. Added `margin-top: -20px` to pull the container up
+2. Adjusted the padding to `20px 20px 40px 20px` to give more space at the bottom while keeping the sides the same
+
+The icons should now appear higher up on the screen. Would you like me to adjust the position further?
 
 ---
 

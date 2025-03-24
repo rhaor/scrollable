@@ -295,6 +295,7 @@ export const GraphScreen: React.FC<GraphScreenProps> = ({ onNext }) => {
             d: generatePath(generatePhasicNegative(points)),
             transition: { duration: 1, ease: "easeInOut" }
           });
+          break;
         default:
           // Return to baseline for other lines
           await controls.start({

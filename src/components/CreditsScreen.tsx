@@ -65,6 +65,7 @@ const credits = {
         "Hari - I learned a lot in this class!",
         "Teachers I spoke to!",
         "Friends :)",
+        "Cursor AI!"
       ]
     },
     {

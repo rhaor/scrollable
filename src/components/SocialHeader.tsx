@@ -109,6 +109,7 @@ interface Props {
   testButtonState: 'test' | 'graph' | 'guy';
   onTestButtonClick: () => void;
   guyImage?: string;
+  hideTestButton?: boolean;
 }
 
 export const SocialHeader: React.FC<Props> = ({
@@ -119,7 +120,8 @@ export const SocialHeader: React.FC<Props> = ({
   notificationCount,
   testButtonState,
   onTestButtonClick,
-  guyImage = guyHooked
+  guyImage = guyHooked,
+  hideTestButton = false
 }) => {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
 
@@ -131,6 +133,8 @@ export const SocialHeader: React.FC<Props> = ({
   };
 
   const renderTestButton = () => {
+    if (hideTestButton) return null;
+    
     switch (testButtonState) {
       case 'test':
         return (

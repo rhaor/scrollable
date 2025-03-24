@@ -50,39 +50,44 @@ const PulseHint = styled.div`
   }
 `;
 
-interface TextLineProps {
-  isVisible: boolean;
+interface TextProps {
+  isVisible?: boolean;
   isCurved?: boolean;
-  align?: 'left' | 'right';
-  isHey?: boolean;
-  text?: string;
+  isClickable?: boolean;
+  size?: 'small' | 'medium' | 'large';
+  rotation?: number;
+  translateX?: number;
+  align?: 'left' | 'right' | 'center';
 }
 
-const TextLine = styled.div<TextLineProps>`
-  opacity: ${props => props.isVisible ? 1 : 0};
-  transform: translateY(${props => props.isVisible ? '0' : '20px'});
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  margin-bottom: ${props => props.isCurved ? '4px' : '8px'};
-  font-size: ${props => {
-    if (props.isHey) return '32px';
-    if (props.isCurved) return '14px';
-    return '16px';
+const Text = styled.p<TextProps>`
+  opacity: ${(props: TextProps) => props.isVisible ? 1 : 0};
+  transform: translateY(${(props: TextProps) => props.isVisible ? '0' : '20px'});
+  transition: all 0.5s ease;
+  margin-bottom: ${(props: TextProps) => props.isCurved ? '4px' : '8px'};
+  font-size: ${(props: TextProps) => {
+    switch (props.size) {
+      case 'small': return '14px';
+      case 'large': return '24px';
+      default: return '18px';
+    }
   }};
-  line-height: 1.3;
-  text-align: ${props => {
-    if (props.text === 'find & share clarity') return 'left';
-    if (props.text === 'so we can all feel') return 'right';
+  text-align: ${(props: TextProps) => {
+    if (props.align) return props.align;
     if (props.isCurved) return 'center';
-    if (props.align === 'right') return 'right';
     return 'left';
   }};
-  transform: ${props => {
-    if (props.text === 'find & share clarity') return 'rotate(-10deg) translateX(4px)';
-    if (props.text === 'so we can all feel') return 'rotate(12deg) translateX(-8px)';
-    if (props.isCurved) return 'rotate(-10deg) translateX(-10px)';
-    return 'none';
+  transform: ${(props: TextProps) => {
+    const transforms: string[] = [];
+    if (props.isCurved) {
+      const rotation = props.rotation || -5;
+      transforms.push(`rotate(${rotation}deg)`);
+    }
+    if (props.translateX !== undefined) {
+      transforms.push(`translateX(${props.translateX}px)`);
+    }
+    return transforms.length > 0 ? transforms.join(' ') : 'none';
   }};
-  white-space: pre-line;
 `;
 
 const ImageContainer = styled.div`
@@ -165,15 +170,28 @@ const GuyHelloImage = styled.img`
   }
 `;
 
-const lines = [
+interface LineStyle {
+  isHey?: boolean;
+  isCurved?: boolean;
+  rotation?: number;
+  translateX?: number;
+  align?: 'left' | 'right' | 'center';
+}
+
+interface Line {
+  text: string;
+  style: LineStyle;
+}
+
+const lines: Line[] = [
   { text: "hey!", style: { isHey: true } },
   { text: "are you scrolling on your phone,\nwhen you don't actually want to be?", style: {} },
   { text: "or just want to know why\nit's so hard to stop?", style: {} },
   { text: "I feel this way a lot.", style: {} },
   { text: "so, I made this interactive to", style: {} },
-  { text: "find & share clarity", style: { isCurved: true } },
-  { text: "so we can all feel", style: { isCurved: true } },
-  { text: "a bit more", style: { isCurved: true } },
+  { text: "find & share clarity", style: { isCurved: true, rotation: -5, translateX: -10 } },
+  { text: "so we can all feel", style: { isCurved: true, rotation: 3, translateX: 15 } },
+  { text: "a bit more", style: { isCurved: true, rotation: -9, translateX: -7 } },
   { text: "in control.", style: { align: 'right' } }
 ];
 
@@ -182,6 +200,17 @@ interface AnimatedTextScreenProps {
   hasCompletedAnimation: boolean;
   onAnimationComplete: () => void;
 }
+
+interface ButtonProps {
+  isVisible?: boolean;
+  isClickable?: boolean;
+}
+
+const Button = styled.button<ButtonProps>`
+  opacity: ${(props: ButtonProps) => props.isVisible ? 1 : 0};
+  cursor: ${(props: ButtonProps) => props.isClickable ? 'pointer' : 'default'};
+  opacity: ${(props: ButtonProps) => props.isClickable ? 1 : 0.5};
+`;
 
 const AnimatedTextScreen: React.FC<AnimatedTextScreenProps> = ({ 
   onNext, 
@@ -230,16 +259,18 @@ const AnimatedTextScreen: React.FC<AnimatedTextScreenProps> = ({
       />
       <TextContent>
         {lines.map((line, index) => (
-          <TextLine 
+          <Text 
             key={index} 
             isVisible={hasCompletedAnimation || visibleLines.includes(index)}
             isCurved={line.style.isCurved}
-            align={line.style.align}
+            size={line.style.isHey ? 'large' : undefined}
             isHey={line.style.isHey}
-            text={line.text}
+            rotation={line.style.rotation}
+            translateX={line.style.translateX}
+            align={line.style.align}
           >
             {line.text}
-          </TextLine>
+          </Text>
         ))}
       </TextContent>
       <ImageContainer className={showImages ? 'visible' : ''}>

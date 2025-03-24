@@ -363,10 +363,14 @@ export const SocialScreen: React.FC<SocialScreenProps> = ({ onNext, isVisible })
     <ScreenContainer isVisible={isVisible}>
       {showExploreDialog && <ExploreDialog onExplore={handleExplore} />}
       <SocialHeader
-        hasNotifications={hasNotifications}
-        onNotificationsClick={() => setHasNotifications(false)}
-        onDMClick={handleDMClick}
-        unreadDMs={unreadDMs}
+        hasNotifications={true}
+        onNotificationsClick={() => {}}
+        onDMClick={() => setIsDMOpen(true)}
+        unreadDMs={3}
+        notificationCount={0}
+        testButtonState="test"
+        onTestButtonClick={() => {}}
+        hideTestButton={true}
       />
       <SocialNavigation
         activeTab={activeTab}
